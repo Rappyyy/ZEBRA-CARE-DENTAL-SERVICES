@@ -22,7 +22,7 @@ level of detail to aim for.*
 This design document highlights the significance of Zebra Care Dental Services,
 a dental clinic appointment application that offers a range of dental services.
 Our application is tailored to meet the diverse needs of our customers, providing a seamless experience for scheduling 
-dental appointments. With our user-friendly interface, customers can easily choose their preferred clinics and the 
+dental appointments. With our user-friendly interface, customers can easily choose their preferred date and time and 
 specific dental services they require.
 
 
