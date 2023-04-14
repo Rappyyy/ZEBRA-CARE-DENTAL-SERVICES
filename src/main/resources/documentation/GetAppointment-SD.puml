@@ -1,0 +1,43 @@
+@startuml
+title Get Appointment
+
+actor Patient
+participant "API Gateway" as APIGateway
+participant Lambda
+participant getAppointment
+participant AppointmentDao
+participant ModelConverter
+database DynamoDB
+
+Patient -> APIGateway : GET /appointments/:id
+activate Patient
+APIGateway -> Lambda
+activate Lambda
+activate getAppointment
+activate AppointmentDao
+Lambda -> getAppointment :  handleRequest(getAppointmentRequest, Context)
+getAppointment -> AppointmentDao : getAppointment(requestedId : String)
+AppointmentDao -> DynamoDB : load appointment by ID
+alt if appointment ID does not exist
+    AppointmentDao <-- DynamoDB : null
+    Lambda <-- AppointmentDao : throw AppointmentNotFoundException
+    APIGateway <-- Lambda
+    Patient <-- APIGateway : 404 Response
+else otherwise, continue
+end
+
+AppointmentDao <-- DynamoDB : Appointment
+getAppointment <-- AppointmentDao : Appointment
+getAppointment -> ModelConverter : toAppointmentModel(Appointment)
+activate ModelConverter
+getAppointment <-- ModelConverter : PlaylistModel
+deactivate ModelConverter
+Lambda <-- getAppointment : GetPlaylistResult
+APIGateway <-- Lambda
+deactivate AppointmentDao
+deactivate getAppointment
+deactivate Lambda
+Patient <-- APIGateway : 200 Response
+deactivate Patient
+
+@enduml

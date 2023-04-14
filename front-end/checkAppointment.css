@@ -1,0 +1,114 @@
+
+h1 {
+    color: white;
+    text-align: center;
+    font-size: 55px;
+}
+.header {
+  margin: auto;
+  min-height: 95vh;
+  width: 100%;
+  background-image: linear-gradient(rgba(14, 23, 59, 0.7),rgba(21, 37, 96, 0.7)),url(checkAppointment.jpg);
+  background-position: center;
+  background-size: cover;
+  position: relative;
+}
+
+nav {
+  display: flex;
+  padding: 2% 6%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav {
+  display: flex;
+  padding: 2% 6%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav img {
+width: 150px;
+}
+
+.nav-links {
+  flex: 1;
+  text-align: right;
+}
+.nav-links ul li {
+  list-style-type: none;
+  display: inline-block;
+  padding: 8px 12px;
+  position: relative;
+}
+.nav-links ul li a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 13px;
+}
+.nav-links ul li ::after {
+  content: '';
+  width: 0%;
+  height: 2px;
+  background: #f44336;
+  display: block;
+  margin: auto;
+}
+.nav-links ul li :hover::after {
+  width: 100%;
+}
+
+.input-appointmentId{
+  width: 80%;
+  margin: auto;
+  text-align: center;
+  padding-top: 90px;
+ }
+ .input-appointmentId h1 {
+  color: black;
+  font-size: 36px;
+  font-weight: 600;
+ }
+
+ .form-container{
+  display: flex; 
+  flex-direction: column;
+  align-items: center;
+}
+.input_field{
+ text-align: center;
+}
+input[type=text] {
+  width: 80%;
+  padding: 12px 20px;
+  margin-top: 80px;
+  margin-bottom: 100px;
+  display: inline-block;
+  border: 1px solid #000;
+  border-radius: 4px;
+  box-sizing: border-box;
+  opacity: 0.5; 
+  background-color: white;
+}
+
+input[type=submit] {
+  width: 200px;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+.parent-container {
+  border: 10px;
+  background-color: #86c1f1;
+  padding: 100px;
+}

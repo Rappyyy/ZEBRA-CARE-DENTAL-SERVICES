@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment</title>
+    <link rel="stylesheet" href="Appointment.css" media="screen" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.4/axios.min.js" integrity="sha512-LUKzDoJKOLqnxGWWIBM4lzRBlxcva2ZTztO8bTcWPmDSpkErWx0bSP4pdsjNH8kiHAUPaT06UXcb+vOEZH+HpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+                <nav>
+                    <a href="HomePage.html"><img class= "resizeLogo" src="dental.jpg"></a>
+                    <div class="nav-links" id="navLinks">
+                        <ul>
+                            <li><a href="HomePage.html">HOME</a></li>
+                            <li><a href="Services.html">SERVICES</a></li>
+                            <li><a href="checkAppointment.html">CHECK APPOINTMENT</a></li>
+                        </ul>
+                    </div>
+                </nav>
+                <h1 class="h1">Online Appointment  </h1>
+        </div>
+    </div>
+      <div class="parent-container">
+          <!-- <form action="/action_page.php" > -->
+            <div class="form-container">
+            <div class="form-col-1">
+                <label for="patientName">Patient Name</label>
+                <input type="text" id="patientName" name="patientName" placeholder="Your name..">
+                <label for="phone">Phone</label>
+                <input type="text" id="phone" name="phone" placeholder="Your contact number..">
+                <label for="startTime">Preferred Appointed Time</label>
+                <input type="datetime-local" id="startTime" name="startTime">
+                </select>
+                <label for="description">Description</label>
+                <input type="text" id="description" name="description" placeholder="Your description..">
+            </div>
+            <div class="form-col-2">
+                <label for="dentist">Dentist Name</label>
+                <input type="text" id="dentist" name="dentist" placeholder="Dentist name..">
+                <label for="address">Address</label>
+                <input type="text" id="address" name="address" placeholder="Your address..">
+                <label for="endTime">Preferred End Time</label>
+                <input type="datetime-local" id="endTime" name="endTime">
+                <label for="endTime">Service</label>
+                <select id="service" name="service">
+                <option value="Children's Dentistry Services">Children's Dentistry Services</option>
+                  <option value="Tooth Implants">Tooth Implants</option>
+                  <option value="Orthodontics">Orthodontics</option>
+                  <option value="General Dentistry">General Dentistry</option>
+                </select>
+            </div>
+        </div>
+        <div class="submitbtn">
+            <input type="submit" value="Submit" onclick="returnName()">
+        </div>
+        </form>
+      </div>
+      <script>
+     
+        function returnName() {
+            const patientName = document.getElementById("patientName").value;
+            const dentistName = document.getElementById("dentist").value;
+            const contactInfo = document.getElementById("phone").value;
+            const address = document.getElementById("address").value;
+            const startTime= document.getElementById("startTime").value;
+            const endTime= document.getElementById("endTime").value;
+            const description = document.getElementById("description").value;
+            const service= document.getElementById("service").value;
+            const newData = {
+            "startTime": startTime,
+            "endTime": endTime,
+            "patientName": patientName,
+            "dentistName": dentistName,
+            "contactInfo": contactInfo,
+            "address": address,
+            "description": description,
+            "service": service
+            }
+            axios.post('https://4mier8seu8.execute-api.us-west-2.amazonaws.com/prod/appointments/', newData)
+            .then(function (response) {
+            // handle success
+                alert("Schedule succesfully created!")
+            console.log(response);
+            window.location.reload();
+        })
+        }
+      </script>
+</body>
+</html>

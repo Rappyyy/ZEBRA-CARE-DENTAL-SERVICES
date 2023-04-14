@@ -1,0 +1,56 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+title Create Appointment
+autonumber
+
+actor Patient
+participant "API Gateway"
+participant Lambda
+participant CreateAppointment
+participant AppointmentDao
+participant AppointmentServiceUtils
+participant ModelConverter
+database DynamoDB
+
+Patient -> "API Gateway" : POST/appointments
+activate Patient
+"API Gateway" -> Lambda
+activate Lambda
+activate CreateAppointment
+activate AppointmentDao
+Lambda -> CreateAppointment :  handleRequest(CreateAppointmentRequest, Context)
+CreateAppointment -> AppointmentServiceUtils : isValidString(name)
+CreateAppointment -> AppointmentServiceUtils : isValidString(patientId)
+
+alt if name or patientId invalid
+    CreateAppointment <-- AppointmentServiceUtils : false
+    Lambda <-- CreateAppointment : throw InvalidAttributeValueException
+    "API Gateway" <-- Lambda
+    Patient <-- "API Gateway" : 4xx Response
+else otherwise, continue
+end
+
+CreateAppointment -> AppointmentServiceUtils : generateAppointmentID()
+CreateAppointment <-- AppointmentServiceUtils : new appointment ID
+
+CreateAppointment -> CreateAppointment : populate Appointment object
+
+CreateAppointment -> AppointmentDao : saveAppointment(Appointment)
+AppointmentDao -> DynamoDB : save appointment
+AppointmentDao <-- DynamoDB
+CreateAppointment <-- AppointmentDao : Appointment
+
+CreateAppointment -> ModelConverter : toAppointmentModel(Appointment)
+activate ModelConverter
+CreateAppointment <-- ModelConverter : AppointmentModel
+deactivate ModelConverter
+
+Lambda <-- CreateAppointment : CreateAppointmentResponse
+deactivate AppointmentDao
+deactivate CreateAppointment
+"API Gateway" <-- Lambda
+deactivate Lambda
+Patient <-- "API Gateway" : 200 Response
+deactivate Client
+
+@enduml
